@@ -11,9 +11,9 @@ def home():
 
 @app.route("/coordenadas", methods=["GET"])
 def coordenadas():
-    global ponto
-    ponto += 1
-    coordenadas_dict[ponto] = {"latitude": -6.423, "longitude": -36.1245}
+    #global ponto
+    #ponto += 1
+    #coordenadas_dict[ponto] = {"latitude": -6.423, "longitude": -36.1245}
     return jsonify(coordenadas_dict)
 
 @app.route("/limpar", methods=["GET"])
@@ -25,10 +25,14 @@ def limpar():
 
 @app.route("/novas-coordenadas", methods=["POST"])
 def novas_coordenadas():
+    global coordenadas_dict, ponto
     dados = request.get_json()
 
     latitude = dados.get("latitude")
     longitude = dados.get("longitude")
+
+    ponto += 1
+    coordenadas_dict[ponto] = {"latitude": latitude, "longitude": longitude}
 
     return jsonify({"messagem": "Dados recebidos", "latitude": latitude, "longitude": longitude}), 200
 
